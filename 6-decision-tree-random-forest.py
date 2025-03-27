@@ -38,12 +38,12 @@ plt.show()
 print("Accuracy of decision tree: {:.2f}".format(tree.score(X_test, y_test)))
 print("Accuracy of random forest: {:.2f}".format(rf.score(X_test, y_test)))
 
-Sample flowers.csv
-Sepal_length,Sepal_width,Petal_length,Petal_width,Flower
-4.6,3.2,1.4,0.2,Rose
-5.3,3.7,1.5,0.2,Rose
-5,3.3,1.4,0.2,Rose
-7,3.2,4.7,1.4,Jasmin
-6.4,3.2,4.5,1.5,Jasmin
-7.1,3,5.9,2.1,Lotus
-6.3,2.9,5.6,1.8,Lotus
+# Sample flowers.csv
+# Sepal_length,Sepal_width,Petal_length,Petal_width,Flower
+# 4.6,3.2,1.4,0.2,Rose
+# 5.3,3.7,1.5,0.2,Rose
+# 5,3.3,1.4,0.2,Rose
+# 7,3.2,4.7,1.4,Jasmin
+# 6.4,3.2,4.5,1.5,Jasmin
+# 7.1,3,5.9,2.1,Lotus
+# 6.3,2.9,5.6,1.8,Lotus
