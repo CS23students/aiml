@@ -1,3 +1,5 @@
+# INSTALL this :  pip install numpy tensorflow
+
 # Program:
 # Import necessary libraries
 import numpy as np
