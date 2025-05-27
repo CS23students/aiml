@@ -3,7 +3,6 @@ import numpy as np
 nodes = ['A', 'B', 'C', 'D']
 parents = {'B': ['A'], 'C': ['A'], 'D': ['B', 'C']}
 
-# Initial probabilities
 probs = {
     'A': np.array([0.6, 0.4]),
     'B': np.array([[0.3, 0.7], [0.9, 0.1]]),
@@ -13,49 +12,40 @@ probs = {
 
 observed = {'A': 1, 'D': 0}
 
-def em(nodes, parents, probs, data, max_iter=50):
+def em(nodes, probs, data, max_iter=50):
     for _ in range(max_iter):
         counts = {n: np.zeros_like(probs[n]) for n in nodes if n not in data}
         total = 0
-
+        # Iterate over all binary assignments
         for a in range(2):
             for b in range(2):
                 for c in range(2):
                     for d in range(2):
                         assign = {'A': a, 'B': b, 'C': c, 'D': d}
-                        if any(assign[k] != v for k, v in data.items()): continue
-                        p = (
-                            probs['A'][a] *
-                            probs['B'][a][b] *
-                            probs['C'][a][c] *
-                            probs['D'][b][c][d]
-                        )
+                        if any(assign[k] != v for k, v in data.items()): 
+                            continue
+                        p = probs['A'][a] * probs['B'][a][b] * probs['C'][a][c] * probs['D'][b][c][d]
                         total += p
                         if 'B' not in data: counts['B'][a][b] += p
                         if 'C' not in data: counts['C'][a][c] += p
                         if 'D' not in data: counts['D'][b][c][d] += p
 
-        for n in counts:
-            if counts[n].ndim == 1:
-                probs[n] = counts[n] / counts[n].sum()
-            elif counts[n].ndim == 2:
-                sums = counts[n].sum(axis=1, keepdims=True)
-                probs[n] = np.divide(counts[n], sums, where=sums!=0)
+        for n, count in counts.items():
+            if count.ndim == 1:
+                probs[n] = count / count.sum()
+            elif count.ndim == 2:
+                probs[n] = count / count.sum(axis=1, keepdims=True)
             else:
                 for i in range(2):
                     for j in range(2):
-                        s = counts[n][i][j].sum()
-                        if s != 0:
-                            probs[n][i][j] = counts[n][i][j] / s
+                        s = count[i][j].sum()
+                        if s > 0:
+                            probs[n][i][j] = count[i][j] / s
     return probs
 
-# Run EM
-final = em(nodes, parents, probs, observed)
-
-# Print result
-for n in final:
-    print(f"\n{n} final probabilities:\n{final[n]}")
-
+final = em(nodes, probs, observed)
+for n, p in final.items():
+    print(f"\n{n} final probabilities:\n{p}")
 
 # A final probabilities:
 # [0.6 0.4]
