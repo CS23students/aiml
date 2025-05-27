@@ -1,3 +1,5 @@
+# INSTALL this :  pip install numpy tensorflow
+
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
@@ -30,7 +32,15 @@ for i, pred in enumerate(predictions):
     print(f"Input: {test_data[i]} -> Predicted: {pred[0]:.4f}")
 
 
+# 3. Save and Run the Program
+# Open any text editor or IDE (like VS Code, PyCharm, or Notepad++).
 
+# Paste the code into a new file and save it as xor_nn.py.
+# Then open your terminal or command prompt, go to the directory where you saved the file, and run:
+# python xor_nn.py
+
+
+# OP:
 # Epoch 1000/1000
 # 1/1 [==============================] - 0s 4ms/step - loss: 0.0132 - accuracy: 1.0000
 
