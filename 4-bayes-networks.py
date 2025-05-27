@@ -1,3 +1,52 @@
+# Monty Hall Problem Simulation in Python
+# Using logic similar to Bayesian Network nodes: guest, prize, monty
+import random
+
+# Define the doors
+doors = ['A', 'B', 'C']
+
+# Function to simulate Monty's choice based on guest and prize
+def monty_choice(guest, prize):
+    # Monty must open a door that:
+    # - is not the guest's choice
+    # - does not have the prize
+    possible_doors = [door for door in doors if door != guest and door != prize]
+    return random.choice(possible_doors)
+
+# Simulate probabilities for a fixed guest choice
+guest = 'A'
+results = {'prize=A': 0, 'prize=B': 0, 'prize=C': 0}
+
+# Simulate 10000 rounds
+for _ in range(10000):
+    prize = random.choice(doors)
+    monty = monty_choice(guest, prize)
+
+    # Count how often the prize is behind each door
+    results[f'prize={prize}'] += 1
+
+# Show probabilities
+print(f"Given guest chose door: {guest}")
+print("Estimated probabilities of prize behind each door:")
+for key in sorted(results):
+    percentage = (results[key] / 10000) * 100
+    print(f"{key} => {percentage:.2f}%")
+
+# Given guest chose door: A
+# Estimated probabilities of prize behind each door:
+# prize=A => 33.10%
+# prize=B => 34.01%
+# prize=C => 32.89%
+
+
+
+----------------------------------------------------------------------
+
+
+
+
+
+
 import math
 from pomegranate import *
 # Initially the door selected by the guest is completely random
@@ -53,60 +102,6 @@ beliefs)))
 beliefs = network.predict_proba({'guest': 'A', 'prize': 'B'})
 print("\n".join("{}\t{}".format(state.name, str(belief)) for state, belief in zip(network.states,
 beliefs)))
-
-
-----------------------------------------------------------------------
-
-# Monty Hall Problem Simulation in Python
-# Using logic similar to Bayesian Network nodes: guest, prize, monty
-
-import random
-
-# Define the doors
-doors = ['A', 'B', 'C']
-
-# Function to simulate Monty's choice based on guest and prize
-def monty_choice(guest, prize):
-    # Monty must open a door that:
-    # - is not the guest's choice
-    # - does not have the prize
-    possible_doors = [door for door in doors if door != guest and door != prize]
-    return random.choice(possible_doors)
-
-# Simulate probabilities for a fixed guest choice
-guest = 'A'
-results = {'prize=A': 0, 'prize=B': 0, 'prize=C': 0}
-
-# Simulate 10000 rounds
-for _ in range(10000):
-    prize = random.choice(doors)
-    monty = monty_choice(guest, prize)
-
-    # Count how often the prize is behind each door
-    results[f'prize={prize}'] += 1
-
-# Show probabilities
-print(f"Given guest chose door: {guest}")
-print("Estimated probabilities of prize behind each door:")
-for key in sorted(results):
-    percentage = (results[key] / 10000) * 100
-    print(f"{key} => {percentage:.2f}%")
-
-# Given guest chose door: A
-# Estimated probabilities of prize behind each door:
-# prize=A => 33.10%
-# prize=B => 34.01%
-# prize=C => 32.89%
-
-
-
-
-
-
-
-
-
-
 
 
 
