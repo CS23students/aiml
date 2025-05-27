@@ -1,5 +1,8 @@
 # Program:
 
+# pip install numpy tensorflow keras
+
+
 # Import necessary libraries
 import numpy as np
 from keras.models import Sequential
