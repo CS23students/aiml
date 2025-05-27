@@ -1,4 +1,4 @@
-# INSTALL this :  pip install numpy tensorflow
+# INSTALL this :  pip install numpy tensorflow keras
 
 import numpy as np
 from keras.models import Sequential
